@@ -1,7 +1,7 @@
 # Guild ilvl
 This is a addon for the game World of Warcraft that fetches the ilvl from all guild memebers in the given guild and puts it in the note of the characters.
 
-The ilvl-fetcher is a multi-thread java program that contacts directly with Blizzards database through the Blizzard API. It processes and saves the data as a *ready to go* addon LUA file (Core.lua). The addon will use the data to then update all guild memebers notes on character load.
+The ilvl-fetcher is a multi-thread java program that contacts directly with Blizzards database through the Blizzard API. It processes and saves the data as a *ready to go* addon LUA file (Core.lua). The addon will use the data to then update all guild memebers notes on your character load.
 
 
 
