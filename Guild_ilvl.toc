@@ -1,0 +1,7 @@
+## Interface: 70300
+## Author: Krónk - Ravencrest EU
+## Title: Guild ilvl
+## Notes: Give all guild members a note with their ilvl
+## Version: 1.0
+
+Core.lua
