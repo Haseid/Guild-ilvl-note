@@ -12,15 +12,10 @@ C:\Program Files (x86)\World of Warcraft\Interface\AddOns\Guild_ilvl
 ```
 Next you need the Blizzard API key, you can get one [here](https://dev.battle.net/member/register).
 
-Now you need to insert your API key in the Fetcher.java
-```
-[line 20] String blizzard_API_key = "<API key>";
-```
-Example
+Now you need to insert your API key in the Fetcher.java, example:
 ```
 [line 20] String blizzard_API_key = "arvutnia6ja8wemrn54e8w3xcvy"
 ```
-
 Finally you can compile:
 ```
 >>> javac *.java
