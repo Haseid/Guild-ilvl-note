@@ -28,6 +28,12 @@ All you need is the realm and guild name, here's an example on my guild:
 ```
 The Core.lua file will be created or updated, and is ready to go
 
+## Updating
+All character data is updated in Blizzards database on character logout. You should try to run the java program daily. To make things easyer I made a Batch file to run the program (with the example of my guild). You can update the addon on startup of your computer by making a shortcut to the batch file and move it to this path:
+```
+C:\Users\Username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+```
+
 ## Things you should know
 * It only works on EU.
 * You need a Blizzard API key
