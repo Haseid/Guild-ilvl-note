@@ -114,16 +114,21 @@ class Fetcher {
 			fileWriter.write("f:RegisterEvent(\"GUILD_ROSTER_UPDATE\")");
 			fileWriter.write("f:SetScript(\"OnEvent\",function(self,event,...)\n");
 			fileWriter.write("\tif 0~=GetNumGuildMembers() then\n");
-			fileWriter.write("\t\tfor key, val in pairs(char_ilvl) do\n");
-			fileWriter.write("\t\t\tfor i=1,GetNumGuildMembers() do\n");
-			fileWriter.write("\t\t\t\tlocal name = GetGuildRosterInfo(i)\n");
-			fileWriter.write("\t\t\t\tif name==key then\n");
-			fileWriter.write("\t\t\t\t\tGuildRosterSetPublicNote(i, \"ilvl \"..val)\n");
+			fileWriter.write("\t\tif GetGuildInfo(\"player\")==\""+guild_name+"\" then\n");
+			fileWriter.write("\t\t\tfor key, val in pairs(char_ilvl) do\n");
+			fileWriter.write("\t\t\t\tfor i=1,GetNumGuildMembers() do\n");
+			fileWriter.write("\t\t\t\t\tlocal name = GetGuildRosterInfo(i)\n");
+			fileWriter.write("\t\t\t\t\tif name==key then\n");
+			fileWriter.write("\t\t\t\t\t\tGuildRosterSetPublicNote(i, \"ilvl \"..val)\n");
+			fileWriter.write("\t\t\t\t\tend\n");
 			fileWriter.write("\t\t\t\tend\n");
 			fileWriter.write("\t\t\tend\n");
+			fileWriter.write("\t\t\tf:UnregisterEvent(\"GUILD_ROSTER_UPDATE\");\n");
+			fileWriter.write("\t\t\tprint(\"Guild ilvl Updated\")\n");
+			fileWriter.write("\t\telse\n");
+			fileWriter.write("\t\t\tf:UnregisterEvent(\"GUILD_ROSTER_UPDATE\");\n");
+			fileWriter.write("\t\t\tprint(\"Guild ilvl did nothing, wrong guild\")\n");
 			fileWriter.write("\t\tend\n");
-			fileWriter.write("\t\tf:UnregisterEvent(\"GUILD_ROSTER_UPDATE\");\n");
-			fileWriter.write("\t\tprint(\"Guild ilvl Updated\")\n");
 			fileWriter.write("\tend\n");
 			fileWriter.write("end)\n");
 			fileWriter.close();
@@ -141,13 +146,7 @@ class Fetcher {
 		try {barrier.await();} catch (Exception e) {}
 		time = System.nanoTime()-time;
 		write_lua();
-		System.out.println("\nFinished "+guild_size+" guild members in "+decimal.format(time/1000000000)+" sec\n");
-		for (int i = 10; i>0; i--) {
-			System.out.print("Ending in ("+i+") \r");
-			try {TimeUnit.SECONDS.sleep(1);} catch (Exception e) {}
-		}
-		System.out.print("             ");
-
+		System.out.println("\nFinished "+guild_size+" guild members in "+decimal.format(time/1000000000)+" sec");
 	}
 
 	private class worker extends Thread {
