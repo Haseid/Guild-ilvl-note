@@ -12,12 +12,15 @@ import java.net.URL;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 class Fetcher {
 	String realm;
 	String guild_name;
-	String blizzard_API_key = "<API key>";
+	//String blizzard_API_key = "<API key>";
+	String blizzard_API_key = "jwpmupwbb6ja8rmwdbre77e7w7gdcchs";
 
 	String[] characters = new String[1000];
 	String[] ilvl = new String[1000];
@@ -98,22 +101,32 @@ class Fetcher {
 	}
 
 	public void write_lua() {
-		try (FileWriter fileWriter = new FileWriter("Core.lua")) {
+		try {
+			FileOutputStream fileStream = new FileOutputStream(new File("Core.lua"));
+			OutputStreamWriter fileWriter = new OutputStreamWriter(fileStream, "UTF-8");
 			fileWriter.write("local char_ilvl = {");
 			for (int i = 0; i<guild_size; i++) {
 				if (i == 0) fileWriter.write("[\""+characters[i]+"-"+realm+"\"] = \""+ilvl[i]+"\"");
 				fileWriter.write(",[\""+characters[i]+"-"+realm+"\"] = \""+ilvl[i]+"\"");
 			}
-			fileWriter.write("}\nGuildRoster()\n\n");
-			fileWriter.write("for key, val in pairs(char_ilvl) do\n");
-			fileWriter.write("\tfor i=1,GetNumGuildMembers() do\n");
-			fileWriter.write("\t\tlocal name = GetGuildRosterInfo(i)\n");
-			fileWriter.write("\t\tif name==key then\n");
-			fileWriter.write("\t\t\tGuildRosterSetPublicNote(i, \"ilvl \"..val)\n");
+			fileWriter.write("}\nlocal f = CreateFrame(\"Frame\")\n");
+			fileWriter.write("GuildRoster()\n");
+			fileWriter.write("f:RegisterEvent(\"GUILD_ROSTER_UPDATE\")");
+			fileWriter.write("f:SetScript(\"OnEvent\",function(self,event,...)\n");
+			fileWriter.write("\tif 0~=GetNumGuildMembers() then\n");
+			fileWriter.write("\t\tfor key, val in pairs(char_ilvl) do\n");
+			fileWriter.write("\t\t\tfor i=1,GetNumGuildMembers() do\n");
+			fileWriter.write("\t\t\t\tlocal name = GetGuildRosterInfo(i)\n");
+			fileWriter.write("\t\t\t\tif name==key then\n");
+			fileWriter.write("\t\t\t\t\tGuildRosterSetPublicNote(i, \"ilvl \"..val)\n");
+			fileWriter.write("\t\t\t\tend\n");
+			fileWriter.write("\t\t\tend\n");
 			fileWriter.write("\t\tend\n");
+			fileWriter.write("\t\tf:UnregisterEvent(\"GUILD_ROSTER_UPDATE\");\n");
+			fileWriter.write("\t\tprint(\"Guild ilvl Updated\")\n");
 			fileWriter.write("\tend\n");
-			fileWriter.write("end\n");
-			fileWriter.write("print(\"Guild ilvl finished\")\n");
+			fileWriter.write("end)\n");
+			fileWriter.close();
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(-1);
