@@ -38,4 +38,3 @@ C:\Users\Username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 * It only works on EU
 * You need a Blizzard API key
 * You need to have permission to edit public guild notes
-* I recommend to have the addon enabled on characters in one and the same guild
