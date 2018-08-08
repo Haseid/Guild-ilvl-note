@@ -19,8 +19,7 @@ import java.io.OutputStreamWriter;
 class Fetcher {
 	String realm;
 	String guild_name;
-	//String blizzard_API_key = "<API key>";
-	String blizzard_API_key = "jwpmupwbb6ja8rmwdbre77e7w7gdcchs";
+	String blizzard_API_key = "<API key>";
 
 	String[] characters = new String[1000];
 	String[] ilvl = new String[1000];
