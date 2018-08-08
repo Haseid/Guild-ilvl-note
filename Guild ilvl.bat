@@ -1,1 +1,3 @@
-cls && java Main "Ravencrest" "Stand In Fire DPS Higher"
+@echo off
+java Main "Ravencrest" "Stand In Fire DPS Higher"
+pause
